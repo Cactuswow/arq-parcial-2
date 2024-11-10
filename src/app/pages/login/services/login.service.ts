@@ -1,33 +1,38 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import type { RawUser, User } from '../interfaces/login'
+import { Router } from '@angular/router'
+import type { User } from '../interfaces/login'
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private users: User[] = []
   private httpClient = inject(HttpClient)
-  private userEndpoint = 'https://reqres.in/api/users'
+  private router = inject(Router)
 
-  constructor() {
-    this.httpClient.get(this.userEndpoint).subscribe(response => {
-      const { data } = response as { data: RawUser[] }
-      this.users = this.mapJsonToUser(data)
-    })
-  }
+  private userEndpoint = 'https://dummyjson.com/user/'
+  private user: User = {} as User
 
-  get getUsers() {
-    return [...this.users]
-  }
-
-  mapJsonToUser(data: RawUser[]): User[] {
-    return data.map(user => ({
-      id: String(user.id),
-      email: user.email,
-      firstName: user.first_name,
-      lastName: user.last_name,
-      avatar: user.avatar
-    }))
+  login(email: string, password: string) {
+    const loginEndpoint = `${this.userEndpoint}login`
+    this.httpClient
+      .post(loginEndpoint, {
+        username: email,
+        password
+      })
+      .subscribe({
+        next: data => {
+          this.user = data as User
+          localStorage.setItem(
+            'user-token',
+            JSON.stringify(this.user.accessToken)
+          )
+          alert(`Bienvenido ${this.user.username}`)
+          this.router.navigate(['home/get-products'])
+        },
+        error: () => {
+          alert('Usuario o credenciales no coinciden')
+        }
+      })
   }
 }

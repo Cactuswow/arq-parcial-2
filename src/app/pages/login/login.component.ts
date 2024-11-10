@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
 import { LoginService } from './services/login.service'
 
 @Component({
@@ -13,10 +12,9 @@ import { LoginService } from './services/login.service'
 export class LoginComponent {
   private formBuilder = inject(FormBuilder)
   private loginService = inject(LoginService)
-  private router = inject(Router)
 
   private form = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
+    username: ['', Validators.required],
     password: ['', Validators.required]
   })
 
@@ -25,26 +23,16 @@ export class LoginComponent {
       return
     }
 
-    const { email, password } = this.form.value
-    const user = this.loginService.getUsers.find(
-      user => user.email === email && user.id === password
-    )
-
-    if (user) {
-      window.localStorage.setItem('user', JSON.stringify(user))
-      this.router.navigate(['home/get-products'])
-      return
-    }
-
-    alert('Usuario o credenciales incorrectos')
+    const { username, password } = this.form.value
+    this.loginService.login(username as string, password as string)
   }
 
   get getForm() {
     return this.form
   }
 
-  get getEmail() {
-    return this.getForm.get('email')
+  get getUsername() {
+    return this.getForm.get('username')
   }
 
   get getPassword() {

@@ -13,7 +13,6 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-
     children: [
       {
         path: 'get-products',
@@ -37,18 +36,15 @@ export const routes: Routes = [
           ).then(m => m.UpdateProductsComponent)
       },
       {
-        path: 'delete-product',
+        path: 'get-product',
         loadComponent: () =>
-          import(
-            './pages/home/pages/delete-products/delete-products.component'
-          ).then(m => m.DeleteProductsComponent)
+          import('./pages/home/pages/get-product/get-product.component').then(
+            m => m.GetProductComponent
+          )
       },
       {
         path: '**',
-        loadComponent: () =>
-          import('./pages/not-found/not-found.component').then(
-            m => m.NotFoundComponent
-          )
+        redirectTo: '**'
       }
     ]
   },

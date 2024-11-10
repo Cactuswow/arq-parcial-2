@@ -8,19 +8,17 @@
       </span>
       <input
         title="Completa este campo"
-        placeholder="Ingresa tu correo"
+        placeholder="Ingresa tu nombre de usuario"
         type="text"
-        formControlName="email"
-        name="email"
+        formControlName="username"
+        name="username"
       />
     </div>
 
-    @if (!getEmail?.pristine && !getEmail?.valid) { @if
-    (getEmail?.errors?.["required"]) {
-    <p class="error-message">*Campo correo requerido</p>
-    } @if (getEmail?.errors?.["email"]) {
-    <p class="error-message">*No es un correo válido</p>
-    } }
+    @if (!getUsername?.pristine && !getUsername?.valid &&
+    getUsername?.errors?.["required"]) {
+    <p class="error-message">*Campo nombre de usuario requerido</p>
+    }
 
     <div>
       <span>
@@ -35,10 +33,10 @@
       />
     </div>
 
-    @if (!getPassword?.pristine && !getPassword?.valid) { @if
-    (getPassword?.errors?.["required"]) {
+    @if (!getPassword?.pristine && !getPassword?.valid &&
+    getPassword?.errors?.["required"]) {
     <p class="error-message">*Campo contraseña requerido</p>
-    }}
+    }
 
     <button [disabled]="getForm.invalid">Iniciar sesión</button>
   </form>
