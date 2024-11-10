@@ -1,1 +1,45 @@
-<p>login works!</p>
+<main class="login-container">
+  <form (submit)="formSubmit()" [formGroup]="getForm" class="login-form">
+    <h1 class="text-2xl text-[var(--gray-600)]">Inicia sesión</h1>
+
+    <div>
+      <span>
+        <img src="../../../assets/user.svg" alt="Icono de usuario" />
+      </span>
+      <input
+        title="Completa este campo"
+        placeholder="Ingresa tu correo"
+        type="text"
+        formControlName="email"
+        name="email"
+      />
+    </div>
+
+    @if (!getEmail?.pristine && !getEmail?.valid) { @if
+    (getEmail?.errors?.["required"]) {
+    <p class="error-message">*Campo correo requerido</p>
+    } @if (getEmail?.errors?.["email"]) {
+    <p class="error-message">*No es un correo válido</p>
+    } }
+
+    <div>
+      <span>
+        <img src="../../../assets/lock.svg" alt="Icono de candado" />
+      </span>
+      <input
+        title="Completa este campo"
+        placeholder="Ingresa tu contraseña"
+        type="password"
+        formControlName="password"
+        name="password"
+      />
+    </div>
+
+    @if (!getPassword?.pristine && !getPassword?.valid) { @if
+    (getPassword?.errors?.["required"]) {
+    <p class="error-message">*Campo contraseña requerido</p>
+    }}
+
+    <button [disabled]="getForm.invalid">Iniciar sesión</button>
+  </form>
+</main>
