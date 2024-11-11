@@ -1,5 +1,6 @@
+@if(getThumbnail?.value !== ''){
 <main>
-  <form [formGroup]="getForm">
+  <form [formGroup]="getForm" (submit)="formSubmit()">
     <img [src]="getProduct.thumbnail" [alt]="getProduct.title" />
     <label>
       <p class="mb-2 text-lg">Imagen</p>
@@ -30,7 +31,14 @@
 
     <div class="flex gap-4 pt-3">
       <button class="bg-[var(--green-700)]" type="submit">Actualizar</button>
-      <button class="bg-[var(--rose-400)]">Eliminar</button>
+      <button
+        (click)="deleteProduct()"
+        type="button"
+        class="bg-[var(--rose-400)]"
+      >
+        Eliminar
+      </button>
     </div>
   </form>
 </main>
+}

@@ -11,6 +11,49 @@ export class ProductService {
   private products: Product[] = []
 
   constructor() {
+    this.fetchProducts()
+  }
+
+  updateProduct(product: Product) {
+    this.httpClient
+      .put(`${baseEndpointUrl}/products/${product.id}`, product)
+      .subscribe({
+        error() {
+          alert(
+            'Hubo un error interno al actualizar el producto. Intente más tarde'
+          )
+        },
+        next() {
+          alert('Producto actualizado correctamente')
+        }
+      })
+
+    this.products = this.products.map(pr => {
+      if (pr.id === product.id) {
+        return product
+      }
+      return pr
+    })
+  }
+
+  deleteProduct(product: Product) {
+    this.httpClient
+      .delete(`${baseEndpointUrl}/products/${product.id}`)
+      .subscribe({
+        error() {
+          alert(
+            'Hubo un error interno al eliminar el producto. Intente más tarde'
+          )
+        },
+        next() {
+          alert('Producto eliminado correctamente')
+        }
+      })
+
+    this.products = this.products.filter(pr => pr.id !== product.id)
+  }
+
+  fetchProducts() {
     this.httpClient.get(`${baseEndpointUrl}/products`).subscribe({
       next: data => {
         const { products } = data as { products: RawProduct[] }

@@ -17,6 +17,10 @@ export class UpdateProductsComponent {
   private formBuilder = inject(FormBuilder)
 
   constructor() {
+    if (this.getProducts.length === 0) {
+      return
+    }
+
     const product = this.productService.getProducts.find(
       product => product.id === this.router.url.split('/')[3]
     )
@@ -47,8 +51,34 @@ export class UpdateProductsComponent {
     stock: ['', Validators.required]
   })
 
+  formSubmit() {
+    if (this.form.invalid) {
+      return
+    }
+
+    this.product = {
+      id: this.product.id,
+      title: this.getTitle?.value ?? this.product.title,
+      description: this.getDescription?.value ?? this.product.description,
+      price: this.getPrice?.value ?? this.product.price,
+      rating: this.getRating?.value ?? this.product.rating,
+      thumbnail: this.getThumbnail?.value ?? this.product.thumbnail,
+      stock: this.getStock?.value ?? this.product.stock
+    }
+
+    this.productService.updateProduct(this.product)
+  }
+
+  deleteProduct() {
+    this.productService.deleteProduct(this.product)
+  }
+
   get getProduct() {
     return this.product
+  }
+
+  get getProducts() {
+    return this.productService.getProducts
   }
 
   get getForm() {
