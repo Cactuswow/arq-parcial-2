@@ -1,12 +1,13 @@
 <main>
   @for (product of getProducts; track $index) {
-  <a [routerLink]="'/home/get-product/' + product.id">
+  <div class="product" [routerLink]="'/home/get-product/' + product.id">
     <img
-      class="w-40 h-40 object-cover"
+      class="w-40 h-40 object-cover aspect-square"
       [src]="product.thumbnail"
       [alt]="product.title"
     />
-    <div class="flex flex-col gap-4 justify-between p-4">
+    
+    <div class="flex flex-col gap-4 justify-between">
       <article class="flex flex-col gap-4">
         <p class="text-3xl">{{ product.title }}</p>
         <p>{{ product.description }}</p>
@@ -21,8 +22,16 @@
           Cantidad:
           <strong class="text-[var(--rose-400)]">{{ product.stock }}</strong>
         </p>
+
+        <a
+          class="underline transition-colors hover:text-[var(--green-600)]"
+          [routerLink]="'/home/update-product/' + product.id"
+          (click)="linkPropagation($event)"
+        >
+          Editar producto
+        </a>
       </article>
     </div>
-  </a>
+  </div>
   }
 </main>

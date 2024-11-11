@@ -15,4 +15,8 @@ export class GetProductsComponent {
   get getProducts() {
     return this.productService.getProducts
   }
+
+  linkPropagation(event: MouseEvent) {
+    event.stopPropagation()
+  }
 }

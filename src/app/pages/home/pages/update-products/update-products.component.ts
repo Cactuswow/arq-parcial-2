@@ -71,6 +71,7 @@ export class UpdateProductsComponent {
 
   deleteProduct() {
     this.productService.deleteProduct(this.product)
+    this.router.navigate(['home/get-products'])
   }
 
   get getProduct() {
