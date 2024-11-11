@@ -17,7 +17,7 @@ export class ProductService {
         this.products = products
       },
       error: () => {
-        alert('Error al obtener los productos')
+        // alert('Error al obtener los productos')
       }
     })
   }
