@@ -6,13 +6,8 @@
       <span>
         <img src="../../../assets/user.svg" alt="Icono de usuario" />
       </span>
-      <input
-        title="Completa este campo"
-        placeholder="Ingresa tu nombre de usuario"
-        type="text"
-        formControlName="username"
-        name="username"
-      />
+      <input title="Completa este campo" placeholder="Ingresa tu nombre de usuario" type="text"
+        formControlName="username" name="username" />
     </div>
 
     @if (!getUsername?.pristine && !getUsername?.valid &&
@@ -24,13 +19,8 @@
       <span>
         <img src="../../../assets/lock.svg" alt="Icono de candado" />
       </span>
-      <input
-        title="Completa este campo"
-        placeholder="Ingresa tu contraseña"
-        type="password"
-        formControlName="password"
-        name="password"
-      />
+      <input title="Completa este campo" placeholder="Ingresa tu contraseña" type="password" formControlName="password"
+        name="password" />
     </div>
 
     @if (!getPassword?.pristine && !getPassword?.valid &&

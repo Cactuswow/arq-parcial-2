@@ -2,6 +2,7 @@ import { baseEndpointUrl } from '@/constants'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import type { Product, RawProduct } from '../interfaces/product'
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import type { Product, RawProduct } from '../interfaces/product'
 export class ProductService {
   private httpClient = inject(HttpClient)
   private products: Product[] = []
+  private router = inject(Router)
+
 
   constructor() {
     this.fetchProducts()
@@ -74,5 +77,36 @@ export class ProductService {
 
   get getProducts() {
     return this.products
+  }
+
+  postProduct(
+    title: string,
+    description: string,
+    price: string,
+    stock: string,
+    thumbnail: string
+  ) {
+    this.httpClient.post(`${baseEndpointUrl}/products/add`,{
+        title,
+        description,
+        price,
+        stock,
+        thumbnail
+      }).subscribe({
+        next: () => {
+          JSON.stringify({
+            title,
+            description,
+            price,
+            stock,
+            thumbnail
+          })
+          alert('Producto agregado!')
+          this.router.navigate(['home/get-products'])
+        },
+        error: () => {
+          alert('ERROR: No se ha podido cargar el producto')
+        }
+      })
   }
 }

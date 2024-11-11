@@ -1,0 +1,73 @@
+.post-container {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--gray-blue-900);
+  display: flex;
+  justify-content: center;
+  margin-top: 4em;
+  color: var(--white-100);
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.post-form div {
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.post-form div span {
+  padding: 15px;
+  background: var(--mine-900);
+}
+
+.post-form div input {
+  padding: 15px;
+  flex: 1 1 0;
+  background-color: var(--gray-800);
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+.post-form div input::placeholder {
+  color: var(--gray-600);
+}
+
+.post-form div:hover input {
+  background-color: var(--gray-700);
+}
+
+.post-form button {
+  padding: 15px;
+  border-radius: 5px;
+  background-color: var(--green-700);
+  transition: background-color 0.3s;
+}
+
+.post-form button:hover {
+  background-color: var(--green-600);
+}
+
+.post-form button:disabled {
+  background-color: var(--gray-800);
+  color: var(--gray-600);
+}
+
+.error-message {
+  color: var(--rose-400);
+}
+
+.a{
+  display: flex;
+  gap: 10px;
+}
+
+.a input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
