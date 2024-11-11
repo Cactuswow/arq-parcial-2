@@ -1,1 +1,17 @@
+<h1 class="component-title">Bienvenidos a la API DummyJSON</h1>
+
+<div class="tab-container">
+  <input type="radio" name="tab" id="tab1" class="tab tab--1" />
+  <label routerLink="get-products" class="tab_label" for="tab1">Mostrar Productos</label>
+
+  <input type="radio" name="tab" id="tab2" class="tab tab--2" />
+  <label routerLink="create-product" class="tab_label" for="tab2">Cargar Productos</label>
+
+  <input type="radio" name="tab" id="tab3" class="tab tab--3" />
+  <label routerLink="update-product" class="tab_label" for="tab3">Actualizar Productos</label>
+
+  <div class="indicator"></div>
+</div>
+
+
 <router-outlet></router-outlet>
