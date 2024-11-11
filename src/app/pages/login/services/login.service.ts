@@ -1,3 +1,4 @@
+import { baseEndpointUrl } from '@/constants'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
@@ -9,12 +10,10 @@ import type { User } from '../interfaces/login'
 export class LoginService {
   private httpClient = inject(HttpClient)
   private router = inject(Router)
-
-  private userEndpoint = 'https://dummyjson.com/user/'
   private user: User = {} as User
 
   login(email: string, password: string) {
-    const loginEndpoint = `${this.userEndpoint}login`
+    const loginEndpoint = `${baseEndpointUrl}/user/login`
     this.httpClient
       .post(loginEndpoint, {
         username: email,

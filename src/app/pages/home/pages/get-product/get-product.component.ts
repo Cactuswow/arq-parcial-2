@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-get-product',
@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './get-product.component.html',
   styleUrl: './get-product.component.css'
 })
-export class GetProductComponent {
-
-}
+export class GetProductComponent {}

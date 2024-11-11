@@ -13,3 +13,8 @@
   --white-100: #eeeeee;
   --rose-400: #fb7185;
 }
+
+body {
+  background: var(--gray-blue-900);
+  color: var(--white-100);
+}

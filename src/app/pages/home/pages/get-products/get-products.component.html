@@ -1,1 +1,28 @@
-<p>get-products works!</p>
+<main>
+  @for (product of getProducts; track $index) {
+  <a [routerLink]="'/home/get-product/' + product.id">
+    <img
+      class="w-40 h-40 object-cover"
+      [src]="product.thumbnail"
+      [alt]="product.title"
+    />
+    <div class="flex flex-col gap-4 justify-between p-4">
+      <article class="flex flex-col gap-4">
+        <p class="text-3xl">{{ product.title }}</p>
+        <p>{{ product.description }}</p>
+      </article>
+
+      <article class="flex gap-4">
+        <p>
+          Calificación:
+          <strong class="text-[var(--green-600)]">{{ product.rating }}</strong>
+        </p>
+        <p>
+          Cantidad:
+          <strong class="text-[var(--rose-400)]">{{ product.stock }}</strong>
+        </p>
+      </article>
+    </div>
+  </a>
+  }
+</main>
