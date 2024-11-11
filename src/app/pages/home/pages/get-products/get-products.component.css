@@ -3,6 +3,7 @@ main {
   flex-direction: column;
   gap: 20px;
   padding: 20px;
+  align-items: center;
 }
 
 main > a {
@@ -12,6 +13,8 @@ main > a {
   background: var(--gray-800);
   border-radius: 10px;
   transition: transform 0.2s;
+  max-width: 1200px;
+  width: 100%;
 }
 
 main > a:hover {

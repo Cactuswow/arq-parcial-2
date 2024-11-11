@@ -29,14 +29,14 @@ export const routes: Routes = [
           ).then(m => m.PostProductsComponent)
       },
       {
-        path: 'update-product',
+        path: 'update-product/:id',
         loadComponent: () =>
           import(
             './pages/home/pages/update-products/update-products.component'
           ).then(m => m.UpdateProductsComponent)
       },
       {
-        path: 'get-product',
+        path: 'get-product/:id',
         loadComponent: () =>
           import('./pages/home/pages/get-product/get-product.component').then(
             m => m.GetProductComponent

@@ -1,1 +1,36 @@
-<p>update-products works!</p>
+<main>
+  <form [formGroup]="getForm">
+    <img [src]="getProduct.thumbnail" [alt]="getProduct.title" />
+    <label>
+      <p class="mb-2 text-lg">Imagen</p>
+      <input type="text" formControlName="thumbnail" name="thumbnail" />
+    </label>
+
+    <label>
+      <p class="mb-2 text-lg">Título</p>
+      <input type="text" formControlName="title" name="title" />
+    </label>
+
+    <label>
+      <p class="mb-2 text-lg">Descripción</p>
+      <input type="text" formControlName="description" name="description" />
+    </label>
+
+    <div class="flex gap-4">
+      <label class="flex-1">
+        <p class="mb-2 text-lg">Precio</p>
+        <input type="text" formControlName="price" name="price" />
+      </label>
+
+      <label class="flex-1">
+        <p class="mb-2 text-lg">Stock</p>
+        <input type="text" formControlName="stock" name="stock" />
+      </label>
+    </div>
+
+    <div class="flex gap-4 pt-3">
+      <button class="bg-[var(--green-700)]" type="submit">Actualizar</button>
+      <button class="bg-[var(--rose-400)]">Eliminar</button>
+    </div>
+  </form>
+</main>
