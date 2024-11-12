@@ -9,9 +9,8 @@ import { Router } from '@angular/router'
 })
 export class ProductService {
   private httpClient = inject(HttpClient)
-  private products: Product[] = []
   private router = inject(Router)
-
+  private products: Product[] = []
 
   constructor() {
     this.fetchProducts()

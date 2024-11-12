@@ -1,4 +1,4 @@
-@if(getThumbnail?.value !== ''){
+@if(getProduct.id) {
 <main>
   <form [formGroup]="getForm" (submit)="formSubmit()">
     <img [src]="getProduct.thumbnail" [alt]="getProduct.title" />
@@ -6,31 +6,59 @@
       <p class="mb-2 text-lg">Imagen</p>
       <input type="text" formControlName="thumbnail" name="thumbnail" />
     </label>
+    @if (!getThumbnail?.pristine && !getThumbnail?.valid &&
+    getThumbnail?.errors?.["required"]) {
+    <p class="error-message">*Campo requerido</p>
+    }
 
     <label>
       <p class="mb-2 text-lg">Título</p>
       <input type="text" formControlName="title" name="title" />
     </label>
+    @if (!getTitle?.pristine && !getTitle?.valid &&
+    getTitle?.errors?.["required"]) {
+    <p class="error-message">*Campo requerido</p>
+    }
 
     <label>
       <p class="mb-2 text-lg">Descripción</p>
       <input type="text" formControlName="description" name="description" />
     </label>
+    @if (!getDescription?.pristine && !getDescription?.valid &&
+    getDescription?.errors?.["required"]) {
+    <p class="error-message">*Campo requerido</p>
+    }
 
     <div class="flex gap-4">
       <label class="flex-1">
         <p class="mb-2 text-lg">Precio</p>
-        <input type="text" formControlName="price" name="price" />
+        <input type="number" formControlName="price" name="price" />
       </label>
 
       <label class="flex-1">
         <p class="mb-2 text-lg">Stock</p>
-        <input type="text" formControlName="stock" name="stock" />
+        <input type="number" formControlName="stock" name="stock" />
       </label>
     </div>
 
+    <div class="flex">
+      @if (!getPrice?.pristine && !getPrice?.valid &&
+      getPrice?.errors?.["required"]) {
+      <p class="error-message flex-1">*Campo requerido</p>
+      } @if (!getStock?.pristine && !getStock?.valid &&
+      getStock?.errors?.["required"]) {
+      <p class="error-message flex-1">*Campo requerido</p>
+      }
+    </div>
+
     <div class="flex gap-4 pt-3">
-      <button class="bg-[var(--green-700)]" type="submit">Actualizar</button>
+      <button
+        [disabled]="getForm.invalid"
+        class="submit-button"
+        type="submit"
+      >
+        Actualizar
+      </button>
       <button
         (click)="deleteProduct()"
         type="button"
