@@ -2,7 +2,8 @@ import { baseEndpointUrl } from '@/constants'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
-import type { Product, RawProduct } from '../interfaces/product'
+import type { NewProduct, Product, RawProduct } from '../interfaces/product'
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,20 @@ export class ProductService {
       .put(`${baseEndpointUrl}/products/${product.id}`, product)
       .subscribe({
         error() {
-          alert(
-            'Hubo un error interno al actualizar el producto. Intente más tarde'
-          )
+          // alert('Hubo un error interno al actualizar el producto. Intente más tarde')
+          Swal.fire({
+            icon: "error",
+            title: "Lo sentimos...",
+            text: "Hubo un error interno al actualizar el producto. Intente más tarde"
+          });
         },
         next() {
-          alert('Producto actualizado correctamente')
+          // alert('Producto actualizado correctamente')
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: 'Producto actualizado correctamente'
+          });
         }
       })
 
@@ -43,12 +52,22 @@ export class ProductService {
       .delete(`${baseEndpointUrl}/products/${product.id}`)
       .subscribe({
         error() {
-          alert(
-            'Hubo un error interno al eliminar el producto. Intente más tarde'
-          )
+          // alert(
+          //   'Hubo un error interno al eliminar el producto. Intente más tarde'
+          // )
+          Swal.fire({
+            icon: "error",
+            title: "Lo sentimos...",
+            text: "Hubo un error interno al eliminar el producto. Intente más tarde"
+          });
         },
         next() {
-          alert('Producto eliminado correctamente')
+          // alert('Producto eliminado correctamente')
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: 'Producto eliminado correctamente'
+          });
         }
       })
 
@@ -78,36 +97,35 @@ export class ProductService {
     return this.products
   }
 
-  postProduct(
-    title: string,
-    description: string,
-    price: string,
-    stock: string,
-    thumbnail: string
-  ) {
-    this.httpClient
-      .post(`${baseEndpointUrl}/products/add`, {
-        title,
-        description,
-        price,
-        stock,
-        thumbnail
-      })
-      .subscribe({
-        next: () => {
-          JSON.stringify({
-            title,
-            description,
-            price,
-            stock,
-            thumbnail
-          })
-          alert('Producto agregado!')
-          this.router.navigate(['home/get-products'])
-        },
-        error: () => {
-          alert('ERROR: No se ha podido cargar el producto')
-        }
-      })
+  postProduct( newProduct: NewProduct ) {
+    this.httpClient.post(`${baseEndpointUrl}/products/add`, newProduct ).subscribe({
+      next: () => {
+        JSON.stringify({newProduct})
+        // alert('Producto agregado!')
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: 'Producto agregado correctamente'
+        });
+        this.router.navigate(['home/get-products'])
+      },
+      error: () => {
+        // alert('ERROR: No se ha podido cargar el producto')
+        Swal.fire({
+          icon: "error",
+          title: "Lo sentimos...",
+          text: "Hubo un error interno al cargar el producto. Intente más tarde"
+        });
+      }
+    })
+
+    //espero que esto sea valido y funcione 
+    const opa : Product = {} as Product
+    opa.title = newProduct.title
+    opa.description = newProduct.description
+    opa.price = newProduct.price.toString()
+    opa.stock = newProduct.stock.toString()
+    opa.thumbnail = newProduct.thumbnail
+    this.products.push(opa)
   }
 }

@@ -51,6 +51,7 @@ button:hover {
 .submit-button:disabled {
   background: var(--gray-700);
 }
+
 .error-message {
   color: var(--rose-400);
 }

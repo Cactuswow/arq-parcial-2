@@ -3,11 +3,11 @@
     <h1 class="text-2xl text-[var(--gray-600)]">Nuevo Producto</h1>
 
     <div>
-      <input title="Completa este campo" placeholder="Nombre del producto" type="text" formControlName="nameProduct"
-        name="nameProduct" />
+      <input title="Completa este campo" placeholder="Nombre del producto" type="text" formControlName="title"
+        name="title" />
     </div>
-    @if (!getNameProduct?.pristine && !getNameProduct?.valid &&
-    getNameProduct?.errors?.["required"]) {
+    @if (!getTitle?.pristine && !getTitle?.valid &&
+    getTitle?.errors?.["required"]) {
     <p class="error-message">*Campo requerido</p>
     }
 

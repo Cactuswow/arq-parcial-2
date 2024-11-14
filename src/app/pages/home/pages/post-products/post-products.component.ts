@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { ProductService } from '../../services/product.service'
+import { NewProduct } from '../../interfaces/product'
 
 @Component({
   selector: 'app-post-products',
@@ -12,6 +13,9 @@ import { ProductService } from '../../services/product.service'
 export class PostProductsComponent {
   private formBuilder = inject(FormBuilder)
   private postService = inject(ProductService)
+
+
+  private newProduct: NewProduct = {} as NewProduct
 
   private form = this.formBuilder.group({
     nameProduct: ['', Validators.required],
@@ -25,23 +29,23 @@ export class PostProductsComponent {
     if (this.form.invalid) {
       return
     }
+    
+    this.newProduct = {
+      title: this.getTitle?.value ?? this.newProduct.title,
+      description: this.getDescription?.value ?? this.newProduct.description,
+      price: Number(this.getPrice?.value)?? this.newProduct.price,
+      stock: Number(this.getStock?.value) ?? this.newProduct.stock,
+      thumbnail: this.getThumbnail?.value ?? this.newProduct.thumbnail
+    }
 
-    const { nameProduct, description, price, stock, thumbnail } =
-      this.form.value
-    this.postService.postProduct(
-      nameProduct as string,
-      description as string,
-      price as string,
-      stock as string,
-      thumbnail as string
-    )
+    this.postService.postProduct(this.newProduct)
   }
 
   get getForm() {
     return this.form
   }
-  get getNameProduct() {
-    return this.getForm.get('nameProduct')
+  get getTitle() {
+    return this.getForm.get('title')
   }
   get getDescription() {
     return this.getForm.get('description')
