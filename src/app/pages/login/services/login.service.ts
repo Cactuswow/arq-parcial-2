@@ -11,6 +11,9 @@ export class LoginService {
   private httpClient = inject(HttpClient)
   private router = inject(Router)
   private user: User = {} as User
+  constructor() {
+    this.recoverUser()
+  }
 
   login(email: string, password: string) {
     const loginEndpoint = `${baseEndpointUrl}/user/login`
@@ -22,10 +25,7 @@ export class LoginService {
       .subscribe({
         next: data => {
           this.user = data as User
-          localStorage.setItem(
-            'user-token',
-            JSON.stringify(this.user.accessToken)
-          )
+          localStorage.setItem('user-token', this.user.accessToken)
           alert(`Bienvenido ${this.user.username}`)
           this.router.navigate(['home/get-products'])
         },
@@ -33,5 +33,29 @@ export class LoginService {
           alert('Usuario o credenciales no coinciden')
         }
       })
+  }
+
+  recoverUser() {
+    const token = localStorage.getItem('user-token')
+    this.httpClient
+      .get(`${baseEndpointUrl}/auth/me`, {
+        headers: {
+          // biome-ignore lint/style/useNamingConvention: <explanation>
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .subscribe({
+        next: data => {
+          this.user = data as User
+        },
+        error: () => {
+          localStorage.removeItem('user-token')
+          this.router.navigate(['login'])
+        }
+      })
+  }
+
+  getUser() {
+    return this.user
   }
 }

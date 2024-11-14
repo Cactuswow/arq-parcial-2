@@ -1,8 +1,8 @@
 import { baseEndpointUrl } from '@/constants'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
-import type { Product, RawProduct } from '../interfaces/product'
 import { Router } from '@angular/router'
+import type { Product, RawProduct } from '../interfaces/product'
 
 @Injectable({
   providedIn: 'root'
@@ -85,13 +85,15 @@ export class ProductService {
     stock: string,
     thumbnail: string
   ) {
-    this.httpClient.post(`${baseEndpointUrl}/products/add`,{
+    this.httpClient
+      .post(`${baseEndpointUrl}/products/add`, {
         title,
         description,
         price,
         stock,
         thumbnail
-      }).subscribe({
+      })
+      .subscribe({
         next: () => {
           JSON.stringify({
             title,

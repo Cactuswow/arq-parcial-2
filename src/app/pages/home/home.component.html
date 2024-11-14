@@ -1,14 +1,33 @@
+@if (getUser.username) {
+<div class="flex p-4 items-center gap-3">
+  <img class="w-12 h-12" [src]="getUser.image" [alt]="getUser.username" />
+  <p class="text-lg">{{ getUser.username }}</p>
+</div>
+} @else {
+<div class="p-4">
+  <a
+    class="p-4 transition-colors hover:text-[var(--green-600)]"
+    routerLink="/login"
+  >
+    Inicia sesión aquí
+  </a>
+</div>
+}
+
 <h1 class="component-title">Bienvenidos a la API DummyJSON</h1>
 
 <div class="tab-container">
   <input type="radio" name="tab" id="tab1" class="tab tab--1" />
-  <label routerLink="get-products" class="tab_label" for="tab1">Mostrar Productos</label>
+  <label routerLink="get-products" class="tab_label" for="tab1"
+    >Mostrar Productos</label
+  >
 
   <input type="radio" name="tab" id="tab2" class="tab tab--2" />
-  <label routerLink="create-product" class="tab_label" for="tab2">Cargar Productos</label>
+  <label routerLink="create-product" class="tab_label" for="tab2"
+    >Cargar Productos</label
+  >
 
   <div class="indicator"></div>
 </div>
-
 
 <router-outlet></router-outlet>
