@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core'
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import type { NewProduct } from '../../interfaces/product'
 import { ProductService } from '../../services/product.service'
-import { NewProduct } from '../../interfaces/product'
 
 @Component({
   selector: 'app-post-products',
@@ -14,11 +14,10 @@ export class PostProductsComponent {
   private formBuilder = inject(FormBuilder)
   private postService = inject(ProductService)
 
-
-  private newProduct: NewProduct = {} as NewProduct
+  private newProduct = {} as NewProduct
 
   private form = this.formBuilder.group({
-    nameProduct: ['', Validators.required],
+    title: ['', Validators.required],
     description: ['', Validators.required],
     price: ['', Validators.required],
     stock: ['', Validators.required],
@@ -29,13 +28,13 @@ export class PostProductsComponent {
     if (this.form.invalid) {
       return
     }
-    
+
     this.newProduct = {
-      title: this.getTitle?.value ?? this.newProduct.title,
-      description: this.getDescription?.value ?? this.newProduct.description,
-      price: Number(this.getPrice?.value)?? this.newProduct.price,
-      stock: Number(this.getStock?.value) ?? this.newProduct.stock,
-      thumbnail: this.getThumbnail?.value ?? this.newProduct.thumbnail
+      title: this.getTitle?.value ?? '',
+      description: this.getDescription?.value ?? '',
+      price: Number(this.getPrice?.value) ?? '',
+      stock: Number(this.getStock?.value) ?? '',
+      thumbnail: this.getThumbnail?.value ?? ''
     }
 
     this.postService.postProduct(this.newProduct)

@@ -25,5 +25,3 @@ export interface NewProduct {
   stock: number
   thumbnail: string
 }
-
-

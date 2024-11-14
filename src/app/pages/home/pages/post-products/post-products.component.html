@@ -3,8 +3,13 @@
     <h1 class="text-2xl text-[var(--gray-600)]">Nuevo Producto</h1>
 
     <div>
-      <input title="Completa este campo" placeholder="Nombre del producto" type="text" formControlName="title"
-        name="title" />
+      <input
+        title="Completa este campo"
+        placeholder="Nombre del producto"
+        type="text"
+        formControlName="title"
+        name="title"
+      />
     </div>
     @if (!getTitle?.pristine && !getTitle?.valid &&
     getTitle?.errors?.["required"]) {
@@ -12,8 +17,13 @@
     }
 
     <div>
-      <input title="Completa este campo" placeholder="Descripción" type="text" formControlName="description"
-        name="description" />
+      <input
+        title="Completa este campo"
+        placeholder="Descripción"
+        type="text"
+        formControlName="description"
+        name="description"
+      />
     </div>
     @if (!getDescription?.pristine && !getDescription?.valid &&
     getDescription?.errors?.["required"]) {
@@ -22,22 +32,38 @@
 
     <div class="a">
       <div>
-        <input title="Completa este campo" placeholder="Precio" type="number" formControlName="price" name="price" />
+        <input
+          title="Completa este campo"
+          placeholder="Precio"
+          type="number"
+          formControlName="price"
+          name="price"
+        />
       </div>
       <div>
-        <input title="Completa este campo" placeholder="Cantidad" type="number" formControlName="stock" name="stock" />
+        <input
+          title="Completa este campo"
+          placeholder="Cantidad"
+          type="number"
+          formControlName="stock"
+          name="stock"
+        />
       </div>
     </div>
     @if (!getPrice?.pristine && !getPrice?.valid &&
-    getPrice?.errors?.["required"] ||
-    !getStock?.pristine && !getStock?.valid &&
+    getPrice?.errors?.["required"] || !getStock?.pristine && !getStock?.valid &&
     getStock?.errors?.["required"]) {
     <p class="error-message">*Campos requeridos</p>
     }
 
     <div>
-      <input title="Completa este campo" placeholder="Miniatura Url" type="url" formControlName="thumbnail"
-        name="thumbnail" />
+      <input
+        title="Completa este campo"
+        placeholder="Miniatura Url"
+        type="url"
+        formControlName="thumbnail"
+        name="thumbnail"
+      />
     </div>
     @if (!getThumbnail?.pristine && !getThumbnail?.valid &&
     getThumbnail?.errors?.["required"]) {

@@ -1,9 +1,9 @@
 import { baseEndpointUrl } from '@/constants'
 import { HttpClient } from '@angular/common/http'
-import { Injectable, inject } from '@angular/core'
+import { Injectable, afterNextRender, inject } from '@angular/core'
 import { Router } from '@angular/router'
-import type { NewProduct, Product, RawProduct } from '../interfaces/product'
 import Swal from 'sweetalert2'
+import type { NewProduct, Product, RawProduct } from '../interfaces/product'
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,9 @@ export class ProductService {
   private products: Product[] = []
 
   constructor() {
-    this.fetchProducts()
+    afterNextRender(() => {
+      this.fetchProducts()
+    })
   }
 
   updateProduct(product: Product) {
@@ -24,18 +26,18 @@ export class ProductService {
         error() {
           // alert('Hubo un error interno al actualizar el producto. Intente más tarde')
           Swal.fire({
-            icon: "error",
-            title: "Lo sentimos...",
-            text: "Hubo un error interno al actualizar el producto. Intente más tarde"
-          });
+            icon: 'error',
+            title: 'Lo sentimos...',
+            text: 'Hubo un error interno al actualizar el producto. Intente más tarde'
+          })
         },
         next() {
           // alert('Producto actualizado correctamente')
           Swal.fire({
-            icon: "success",
-            title: "Success",
+            icon: 'success',
+            title: 'Success',
             text: 'Producto actualizado correctamente'
-          });
+          })
         }
       })
 
@@ -56,18 +58,18 @@ export class ProductService {
           //   'Hubo un error interno al eliminar el producto. Intente más tarde'
           // )
           Swal.fire({
-            icon: "error",
-            title: "Lo sentimos...",
-            text: "Hubo un error interno al eliminar el producto. Intente más tarde"
-          });
+            icon: 'error',
+            title: 'Lo sentimos...',
+            text: 'Hubo un error interno al eliminar el producto. Intente más tarde'
+          })
         },
         next() {
           // alert('Producto eliminado correctamente')
           Swal.fire({
-            icon: "success",
-            title: "Success",
+            icon: 'success',
+            title: 'Success',
             text: 'Producto eliminado correctamente'
-          });
+          })
         }
       })
 
@@ -97,35 +99,36 @@ export class ProductService {
     return this.products
   }
 
-  postProduct(
-    title: string,
-    description: string,
-    price: string,
-    stock: string,
-    thumbnail: string
-  ) {
+  postProduct(newProduct: NewProduct) {
     this.httpClient
-      .post(`${baseEndpointUrl}/products/add`, {
-        title,
-        description,
-        price,
-        stock,
-        thumbnail
-      })
+      .post(`${baseEndpointUrl}/products/add`, newProduct)
       .subscribe({
         next: () => {
-          JSON.stringify({
-            title,
-            description,
-            price,
-            stock,
-            thumbnail
+          // alert('Producto agregado!')
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Producto agregado correctamente'
           })
-          alert('Producto agregado!')
+
+          this.products.push({
+            id: String(Number(this.products.at(-1)?.id) + 1),
+            title: newProduct.title,
+            description: newProduct.description,
+            price: newProduct.price.toString(),
+            rating: '0',
+            thumbnail: newProduct.thumbnail,
+            stock: newProduct.stock.toString()
+          })
           this.router.navigate(['home/get-products'])
         },
         error: () => {
-          alert('ERROR: No se ha podido cargar el producto')
+          // alert('ERROR: No se ha podido cargar el producto')
+          Swal.fire({
+            icon: 'error',
+            title: 'Lo sentimos...',
+            text: 'Hubo un error interno al cargar el producto. Intente más tarde'
+          })
         }
       })
   }

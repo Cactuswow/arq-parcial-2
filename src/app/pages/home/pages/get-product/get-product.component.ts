@@ -1,9 +1,6 @@
 import { Component, inject } from '@angular/core'
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
-import { Product } from '../../interfaces/product'
+import { ActivatedRoute } from '@angular/router'
 import { ProductService } from '../../services/product.service'
-import { ActivatedRoute, Router } from '@angular/router'
-
 
 @Component({
   selector: 'app-get-product',
@@ -14,21 +11,20 @@ import { ActivatedRoute, Router } from '@angular/router'
 })
 export class GetProductComponent {
   private productService = inject(ProductService)
+  private route = inject(ActivatedRoute)
 
-  rutaSegmentos: string[] = [];
-
-  constructor(private route: ActivatedRoute) {}
+  rutaSegmentos: string[] = []
 
   ngOnInit(): void {
     // Acceder a los segmentos de la ruta activa
-    this.route.url.subscribe((segments) => {
-      this.rutaSegmentos = segments.map((segment) => segment.path);
-    });
+    this.route.url.subscribe(segments => {
+      this.rutaSegmentos = segments.map(segment => segment.path)
+    })
   }
   get getProducts() {
     return this.productService.getProducts
   }
-  getParam(){
+  getParam() {
     return this.rutaSegmentos[1]
   }
 }
