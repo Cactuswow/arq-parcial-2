@@ -95,14 +95,16 @@ export class ProductService {
       })
       .subscribe({
         next: () => {
-          JSON.stringify({
+          alert('Producto agregado!')
+          this.products.push({
+            id: String(Number(this.products.at(-1)?.id) + 1),
             title,
             description,
             price,
             stock,
-            thumbnail
+            thumbnail,
+            rating: '0'
           })
-          alert('Producto agregado!')
           this.router.navigate(['home/get-products'])
         },
         error: () => {

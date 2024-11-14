@@ -1,6 +1,6 @@
 import { baseEndpointUrl } from '@/constants'
 import { HttpClient } from '@angular/common/http'
-import { Injectable, inject } from '@angular/core'
+import { Injectable, afterNextRender, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import type { User } from '../interfaces/login'
 
@@ -11,8 +11,11 @@ export class LoginService {
   private httpClient = inject(HttpClient)
   private router = inject(Router)
   private user: User = {} as User
+
   constructor() {
-    this.recoverUser()
+    afterNextRender(() => {
+      this.recoverUser()
+    })
   }
 
   login(email: string, password: string) {
