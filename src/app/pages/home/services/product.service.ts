@@ -2,7 +2,8 @@ import { baseEndpointUrl } from '@/constants'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
-import type { Product, RawProduct } from '../interfaces/product'
+import type { NewProduct, Product, RawProduct } from '../interfaces/product'
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,20 @@ export class ProductService {
       .put(`${baseEndpointUrl}/products/${product.id}`, product)
       .subscribe({
         error() {
-          alert(
-            'Hubo un error interno al actualizar el producto. Intente más tarde'
-          )
+          // alert('Hubo un error interno al actualizar el producto. Intente más tarde')
+          Swal.fire({
+            icon: "error",
+            title: "Lo sentimos...",
+            text: "Hubo un error interno al actualizar el producto. Intente más tarde"
+          });
         },
         next() {
-          alert('Producto actualizado correctamente')
+          // alert('Producto actualizado correctamente')
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: 'Producto actualizado correctamente'
+          });
         }
       })
 
@@ -43,12 +52,22 @@ export class ProductService {
       .delete(`${baseEndpointUrl}/products/${product.id}`)
       .subscribe({
         error() {
-          alert(
-            'Hubo un error interno al eliminar el producto. Intente más tarde'
-          )
+          // alert(
+          //   'Hubo un error interno al eliminar el producto. Intente más tarde'
+          // )
+          Swal.fire({
+            icon: "error",
+            title: "Lo sentimos...",
+            text: "Hubo un error interno al eliminar el producto. Intente más tarde"
+          });
         },
         next() {
-          alert('Producto eliminado correctamente')
+          // alert('Producto eliminado correctamente')
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: 'Producto eliminado correctamente'
+          });
         }
       })
 
@@ -95,16 +114,14 @@ export class ProductService {
       })
       .subscribe({
         next: () => {
-          alert('Producto agregado!')
-          this.products.push({
-            id: String(Number(this.products.at(-1)?.id) + 1),
+          JSON.stringify({
             title,
             description,
             price,
             stock,
-            thumbnail,
-            rating: '0'
+            thumbnail
           })
+          alert('Producto agregado!')
           this.router.navigate(['home/get-products'])
         },
         error: () => {

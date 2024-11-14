@@ -17,3 +17,13 @@ export interface RawProduct {
   thumbnail: string
   stock: number
 }
+
+export interface NewProduct {
+  title: string
+  description: string
+  price: number
+  stock: number
+  thumbnail: string
+}
+
+

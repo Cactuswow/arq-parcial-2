@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable, afterNextRender, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import type { User } from '../interfaces/login'
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +30,23 @@ export class LoginService {
         next: data => {
           this.user = data as User
           localStorage.setItem('user-token', this.user.accessToken)
-          alert(`Bienvenido ${this.user.username}`)
+          // alert(`Bienvenido ${this.user.username}`)
+          Swal.fire({
+            icon: "success",
+            title: "Ingresado",
+            text: `Bienvenid@ ${this.user.username}`,
+            // footer: '<a href="#">Why do I have this issue?</a>'
+          });
           this.router.navigate(['home/get-products'])
         },
         error: () => {
-          alert('Usuario o credenciales no coinciden')
+          // alert('Usuario o credenciales no coinciden'),
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Usuario o credenciales no coinciden!",
+            // footer: '<a href="#">Why do I have this issue?</a>'
+          });
         }
       })
   }

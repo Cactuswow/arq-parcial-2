@@ -1,1 +1,60 @@
-<p>get-product works!</p>
+<main class="max-w-[1000px] min-w-[600px] mx-auto mt-8">
+  @for (product of getProducts; track $index) {
+    @if(product.id == getParam()){
+      <div class="bg-[--gray-700] rounded-lg p-6 shadow-lg ">
+        <div class="flex flex-col md:flex-row gap-6">
+          <!-- Product Image -->
+          <div class="w-full md:w-2/5 mx-auto">
+            <img 
+              [src]="product.thumbnail" 
+              [alt]="product.title"
+              class="h-96 object-cover rounded-lg bg-cover bg-[--gray-800]"
+            >
+          </div>
+      
+          <!-- Product Details -->
+          <div class="flex-1">
+            <h2 class="text-2xl font-semibold text-white mb-3">{{ product.title }}</h2>
+            
+            <p class="text-slate-300 mb-4">{{ product.description }}</p>
+            
+            <div class="flex flex-wrap gap-4 items-center text-slate-200">
+              <!-- Rating -->
+              <div class="flex items-center gap-2">
+                <span class="text-sm">Calificación:</span>
+                @if(product.rating){
+                  <span class="text-emerald-400 font-semibold">
+                    {{ product.rating }}
+                  </span>
+                }
+                @if(!product.rating){
+                  <span class="text-slate-400 italic">
+                    Sin valoraciones
+                  </span>
+                }
+
+              </div>      
+              <!-- Price -->
+              <div class="flex items-center gap-2">
+                <span class="text-sm">Precio:</span>
+                <span class="font-semibold">${{ product.price }}</span>
+              </div>
+      
+              <!-- Stock -->
+              <div class="flex items-center gap-2">
+                <span class="text-sm">Stock:</span>
+                <span class="font-semibold">{{ product.stock }}</span>
+              </div>
+      
+              <!-- ID -->
+              <div class="flex items-center gap-2">
+                <span class="text-sm">ID:</span>
+                <span class="text-slate-400 text-sm">{{ product.id }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</main>

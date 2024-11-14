@@ -52,18 +52,10 @@
     </div>
 
     <div class="flex gap-4 pt-3">
-      <button
-        [disabled]="getForm.invalid"
-        class="submit-button"
-        type="submit"
-      >
+      <button [disabled]="getForm.invalid" class="submit-button" type="submit">
         Actualizar
       </button>
-      <button
-        (click)="deleteProduct()"
-        type="button"
-        class="bg-[var(--rose-400)]"
-      >
+      <button (click)="deleteProduct()" type="button" class="bg-[var(--rose-400)]">
         Eliminar
       </button>
     </div>
