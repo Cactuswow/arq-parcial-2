@@ -15,13 +15,13 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate: [protectionGuard],
     redirectTo: 'home/get-products',
     pathMatch: 'full'
   },
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [protectionGuard],
     children: [
       {
         path: 'get-products',

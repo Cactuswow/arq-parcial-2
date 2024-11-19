@@ -1,12 +1,14 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { LoginService } from '@/pages/login/services/login.service'
+import { inject } from '@angular/core'
+import { type CanActivateFn, Router } from '@angular/router'
 
-export const protectionGuard: CanActivateFn = (route, state) => {
+export const protectionGuard: CanActivateFn = (_route, _state) => {
   const router = inject(Router)
-  console.log("Pase por el WARD");
-  let token = localStorage.getItem("user-token");
-  if(token){
-    return true;
+  const loginService = inject(LoginService)
+
+  if (loginService.getToken()) {
+    return true
   }
-  return false
-};
+
+  return router.createUrlTree(['login'])
+}

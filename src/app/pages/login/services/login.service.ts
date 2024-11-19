@@ -1,6 +1,7 @@
 import { baseEndpointUrl } from '@/constants'
+import { isPlatformBrowser } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
-import { Injectable, afterNextRender, inject } from '@angular/core'
+import { Injectable, PLATFORM_ID, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import Swal from 'sweetalert2'
 import type { User } from '../interfaces/login'
@@ -11,12 +12,13 @@ import type { User } from '../interfaces/login'
 export class LoginService {
   private httpClient = inject(HttpClient)
   private router = inject(Router)
+  private platform = inject(PLATFORM_ID)
   private user: User = {} as User
 
   constructor() {
-    afterNextRender(() => {
+    if (isPlatformBrowser(this.platform)) {
       this.recoverUser()
-    })
+    }
   }
 
   login(email: string, password: string) {
@@ -69,6 +71,14 @@ export class LoginService {
           this.router.navigate(['login'])
         }
       })
+  }
+
+  getToken() {
+    if (isPlatformBrowser(this.platform)) {
+      return localStorage.getItem('user-token')
+    }
+
+    return null
   }
 
   getUser() {
