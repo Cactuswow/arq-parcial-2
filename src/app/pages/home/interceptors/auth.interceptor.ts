@@ -1,23 +1,13 @@
-// import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-// import { catchError, throwError } from 'rxjs';
+import type { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
 
-// export const authInterceptor: HttpInterceptorFn = (req, next) => {
-//   const token = localStorage.getItem("token");
-//   if(req.url.includes("/api")){  //para que no aplique interceptor al login
-//     if(token){
-//       const petitionClone = req.clone({
-//         setHeaders: {
-//           Authorization: `Bearer ${token}`
-//         }
-//       });
-//       return next(petitionClone).pipe(catchError(handleError));
-//     }
-//   }
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  return next(req).pipe(catchError(handleErrorResponse));
+};
 
-//   return next(req).pipe(catchError(handleError()));
-// };
+function handleErrorResponse (error: HttpErrorResponse){
+  // const errorResponse = ``
+  console.log("My error", error)
 
-// function handleError = (error: HttpErrorResponse) => {
-//   throw new Error('Function not implemented.');
-// }
-
+  return throwError(()=> "Opa")
+}
