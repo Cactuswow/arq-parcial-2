@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ProductService } from '../../services/product.service'
+import { Product } from '../../interfaces/product'
 
 @Component({
   selector: 'app-get-product',
@@ -12,7 +13,7 @@ import { ProductService } from '../../services/product.service'
 export class GetProductComponent {
   private productService = inject(ProductService)
   private route = inject(ActivatedRoute)
-
+  productNow : Product | undefined;
   rutaSegmentos: string[] = []
 
   ngOnInit(): void {
@@ -26,5 +27,11 @@ export class GetProductComponent {
   }
   getParam() {
     return this.rutaSegmentos[1]
+  }
+
+  getProduct(){
+    const product = this.getProducts.find(product => product.id == this.getParam())
+    this.productNow = product;
+    return product
   }
 }
