@@ -12,6 +12,7 @@ export class ProductService {
   private httpClient = inject(HttpClient)
   private router = inject(Router)
   private products: Product[] = []
+  productService: any
 
   constructor() {
     afterNextRender(() => {
@@ -120,7 +121,9 @@ export class ProductService {
             thumbnail: newProduct.thumbnail,
             stock: newProduct.stock.toString()
           })
-          this.router.navigate(['home/get-products'])
+
+          console.log(this.products.at(-1)?.id);
+          this.router.navigate([`home/get-product/${this.products.at(-1)?.id}`])
         },
         error: () => {
           // alert('ERROR: No se ha podido cargar el producto')

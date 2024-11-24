@@ -5,10 +5,10 @@ import { catchError, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   console.log("Pase por el INTERCEPTOR");
-  
+
   const token = localStorage.getItem("user-token");
-  if(req.url.includes("/home")){ 
-    if(token){
+  if (req.url.includes("/home")) {
+    if (token) {
       const petitionClone = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
