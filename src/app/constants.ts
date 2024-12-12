@@ -1,1 +1,2 @@
-export const baseEndpointUrl = 'http://localhost:8000'
+import { environment } from '../environments/environment'
+export const baseEndpointUrl = environment.baseEndpointUrl

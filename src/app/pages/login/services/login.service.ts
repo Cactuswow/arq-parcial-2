@@ -55,17 +55,19 @@ export class LoginService {
 
   recoverUser() {
     const token = localStorage.getItem('user-token')
-    this.httpClient
-      .get(`${baseEndpointUrl}/auth/me/${token}`)
-      .subscribe({
-        next: data => {
-          this.user = data as User
-        },
-        error: () => {
-          localStorage.removeItem('user-token')
-          this.router.navigate(['login'])
-        }
-      })
+    if (!token) {
+      return
+    }
+
+    this.httpClient.get(`${baseEndpointUrl}/auth/me/${token}`).subscribe({
+      next: data => {
+        this.user = data as User
+      },
+      error: () => {
+        localStorage.removeItem('user-token')
+        this.router.navigate(['login'])
+      }
+    })
   }
 
   getToken() {
