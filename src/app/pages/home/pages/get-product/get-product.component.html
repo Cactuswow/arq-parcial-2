@@ -1,22 +1,22 @@
 <main class="max-w-[1000px] min-w-[600px] mx-auto mt-8">
-  @if(getProduct()){
+  @if(getProduct()?.id){
     <div class="bg-[--gray-700] rounded-lg p-6 shadow-lg ">
       <div class="flex flex-col md:flex-row gap-6">
         <!-- Product Image -->
         <div class="w-full md:w-2/5 mx-auto">
-          <img 
-            [src]="productNow?.thumbnail" 
+          <img
+            [src]="productNow?.thumbnail"
             [alt]="productNow?.title"
             class="h-96 object-cover rounded-lg bg-cover bg-[--gray-800]"
           >
         </div>
-    
+
         <!-- Product Details -->
         <div class="flex-1">
           <h2 class="text-2xl font-semibold text-white mb-3">{{ productNow?.title }}</h2>
-          
+
           <p class="text-slate-300 mb-4">{{ productNow?.description }}</p>
-          
+
           <div class="flex flex-wrap gap-4 items-center text-slate-200">
             <!-- Rating -->
             <div class="flex items-center gap-2">
@@ -32,19 +32,19 @@
                 </span>
               }
 
-            </div>      
+            </div>
             <!-- Price -->
             <div class="flex items-center gap-2">
               <span class="text-sm">Precio:</span>
               <span class="font-semibold">${{ productNow?.price }}</span>
             </div>
-    
+
             <!-- Stock -->
             <div class="flex items-center gap-2">
               <span class="text-sm">Stock:</span>
               <span class="font-semibold">{{ productNow?.stock }}</span>
             </div>
-    
+
             <!-- ID -->
             <div class="flex items-center gap-2">
               <span class="text-sm">ID:</span>
@@ -55,8 +55,8 @@
       </div>
     </div>
   }@else{
-      
+
     <h1 class="flex items-center justify-center text-5xl font-bold text-slate-200">Producto No encontrado</h1>
-      
+
   }
 </main>

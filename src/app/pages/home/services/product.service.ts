@@ -1,18 +1,19 @@
 import { baseEndpointUrl } from '@/constants'
+import { LoginService } from '@/pages/login/services/login.service'
 import { HttpClient } from '@angular/common/http'
 import { Injectable, afterNextRender, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import Swal from 'sweetalert2'
-import type { NewProduct, Product, RawProduct } from '../interfaces/product'
+import type { NewProduct, Product } from '../interfaces/product'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   private httpClient = inject(HttpClient)
+  private loginService = inject(LoginService)
   private router = inject(Router)
   private products: Product[] = []
-  productService: any
 
   constructor() {
     afterNextRender(() => {
@@ -22,10 +23,9 @@ export class ProductService {
 
   updateProduct(product: Product) {
     this.httpClient
-      .put(`${baseEndpointUrl}/products/${product.id}`, product)
+      .put(`${baseEndpointUrl}/api/product/${product.id}`, product)
       .subscribe({
         error() {
-          // alert('Hubo un error interno al actualizar el producto. Intente más tarde')
           Swal.fire({
             icon: 'error',
             title: 'Lo sentimos...',
@@ -33,7 +33,6 @@ export class ProductService {
           })
         },
         next() {
-          // alert('Producto actualizado correctamente')
           Swal.fire({
             icon: 'success',
             title: 'Success',
@@ -52,7 +51,7 @@ export class ProductService {
 
   deleteProduct(product: Product) {
     this.httpClient
-      .delete(`${baseEndpointUrl}/products/${product.id}`)
+      .delete(`${baseEndpointUrl}/api/product/${product.id}`)
       .subscribe({
         error() {
           // alert(
@@ -78,10 +77,9 @@ export class ProductService {
   }
 
   fetchProducts() {
-    this.httpClient.get(`${baseEndpointUrl}/products`).subscribe({
+    this.httpClient.get<Product[]>(`${baseEndpointUrl}/api/product`).subscribe({
       next: data => {
-        const { products } = data as { products: RawProduct[] }
-        for (const product of products) {
+        for (const product of data) {
           this.products.push({
             id: product.id.toString(),
             title: product.title,
@@ -102,10 +100,10 @@ export class ProductService {
 
   postProduct(newProduct: NewProduct) {
     this.httpClient
-      .post(`${baseEndpointUrl}/products/add`, newProduct)
+      .post<Product[]>(`${baseEndpointUrl}/api/product/`, newProduct)
       .subscribe({
-        next: () => {
-          // alert('Producto agregado!')
+        next: products => {
+          const product = products[0]
           Swal.fire({
             icon: 'success',
             title: 'Success',
@@ -113,20 +111,18 @@ export class ProductService {
           })
 
           this.products.push({
-            id: String(Number(this.products.at(-1)?.id) + 1),
-            title: newProduct.title,
-            description: newProduct.description,
-            price: newProduct.price.toString(),
-            rating: '0',
-            thumbnail: newProduct.thumbnail,
-            stock: newProduct.stock.toString()
+            id: product.id.toString(),
+            title: product.title,
+            description: product.description,
+            price: product.price.toString(),
+            rating: product.rating.toString(),
+            thumbnail: product.thumbnail,
+            stock: product.stock.toString()
           })
 
-          console.log(this.products.at(-1)?.id);
-          this.router.navigate([`home/get-product/${this.products.at(-1)?.id}`])
+          this.router.navigate([`home/get-product/${product?.id}`])
         },
         error: () => {
-          // alert('ERROR: No se ha podido cargar el producto')
           Swal.fire({
             icon: 'error',
             title: 'Lo sentimos...',

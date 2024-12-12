@@ -17,9 +17,6 @@ export class UpdateProductsComponent {
   private formBuilder = inject(FormBuilder)
 
   constructor() {
-    if (this.getProducts.length === 0) {
-      return
-    }
 
     const product = this.productService.getProducts.find(
       product => product.id === this.router.url.split('/')[3]

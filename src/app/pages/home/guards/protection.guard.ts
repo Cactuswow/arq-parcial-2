@@ -5,7 +5,6 @@ import { type CanActivateFn, Router } from '@angular/router'
 export const protectionGuard: CanActivateFn = (_route, _state) => {
   const router = inject(Router)
   const loginService = inject(LoginService)
-
   if (loginService.getToken()) {
     return true
   }

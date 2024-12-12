@@ -22,10 +22,10 @@ export class LoginService {
   }
 
   login(email: string, password: string) {
-    const loginEndpoint = `${baseEndpointUrl}/user/login`
+    const loginEndpoint = `${baseEndpointUrl}/auth`
     this.httpClient
       .post(loginEndpoint, {
-        username: email,
+        name: email,
         password
       })
       .subscribe({
@@ -56,12 +56,7 @@ export class LoginService {
   recoverUser() {
     const token = localStorage.getItem('user-token')
     this.httpClient
-      .get(`${baseEndpointUrl}/auth/me`, {
-        headers: {
-          // biome-ignore lint/style/useNamingConvention: <explanation>
-          Authorization: `Bearer ${token}`
-        }
-      })
+      .get(`${baseEndpointUrl}/auth/me/${token}`)
       .subscribe({
         next: data => {
           this.user = data as User

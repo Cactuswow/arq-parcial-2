@@ -1,4 +1,9 @@
 <main>
+
+  @if(!getProducts.length){
+    <div class="text-lg font-semibold">No hay productos por mostrar :(</div>
+  }
+
   @for (product of getProducts; track $index) {
   <div class="product" [routerLink]="'/home/get-product/' + product.id">
     <img
@@ -6,7 +11,7 @@
       [src]="product.thumbnail"
       [alt]="product.title"
     />
-    
+
     <div class="flex flex-col gap-4 justify-between">
       <article class="flex flex-col gap-4">
         <p class="text-3xl">{{ product.title }}</p>

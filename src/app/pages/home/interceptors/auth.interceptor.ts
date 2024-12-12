@@ -1,30 +1,24 @@
-import type { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import type { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http'
+import { inject } from '@angular/core'
+import { Router } from '@angular/router'
+import { catchError, throwError } from 'rxjs'
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log("Pase por el INTERCEPTOR");
-
-  const token = localStorage.getItem("user-token");
-  if (req.url.includes("/home")) {
-    if (token) {
-      const petitionClone = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return next(petitionClone).pipe(catchError(handleErrorResponse));
-    }
+  if (!req.url.includes('/api')) {
+    return next(req)
   }
 
-  return next(req).pipe(catchError(handleErrorResponse));
-};
+  const token = localStorage.getItem('user-token')
+  return next(
+    req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+  ).pipe(catchError(handleErrorResponse))
+}
 
-function handleErrorResponse(error: HttpErrorResponse) {
-  // const errorResponse = ``
-  console.log("My error", error)
+function handleErrorResponse(_error: HttpErrorResponse) {
   const router = inject(Router)
-
-  return throwError(() => router.navigate(["home/**"]))
+  return throwError(() => router.navigate(['home/**']))
 }
